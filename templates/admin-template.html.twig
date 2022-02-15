@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Accueil
+			{% endblock %}
+		</title>
+{% block stylesheets %}
+			<!-- Font awesome CSS -->
+			<link
+			rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+			<!-- Bootstrap CSS -->
+			<link
+			rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+			<!-- Admin LTE CSS -->
+			<link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+			<link rel="stylesheet" href="{{ asset('assets/css/OverlayScrollbars.min.css') }}">
+			<!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">-->
+		<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- Ionicons -->
+  <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
+  <!-- Theme style -->
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
+  <!-- Google Font: Source Sans Pro -->
+ 
+		{% endblock %}
+<body class="hold-transition sidebar-mini layout-fixed text-sm">
+	{% set role_admin = constant('App\\Constante\\Constantes::ROLE_ADMIN') %}
+
+	<div class="wrapper">
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index.html" class="nav-link">Accueil</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Recherche" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>&nbsp;&nbsp; | &nbsp;&nbsp;<a href="{{ path('edit_password') }}">Profil</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </li>
+    </ul>
+  </nav>
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
+			<a href="index3.html" class="brand-link">
+				<img src="{{ asset('dist/img/resaen.jpg') }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+				<span class="brand-text font-weight-light">Couture</span>
+			</a>
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+				{# <!-- Sidebar user panel (optional) -->
+																																																																																																												<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+																																																																																																													<div class="image">
+																																																																																																														<img src="assets/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+																																																																																																													</div>
+																																																																																																													<div class="info">
+																																																																																																														<a href="#" class="d-block">Ali Mani</a>
+																																																																																																													</div>
+																																																																																																												</div> #}
+
+				<!-- Sidebar Menu -->
+					<nav class="mt-2"> <ul
+						class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+						<!-- Add icons to the links using the .nav-icon class
+																																																																																																																																																																																																																																																							        with font-awesome or any other icon font library -->
+						<li class="nav-header">Menu</li>
+						<li class="nav-item">
+							<a href="{{ path('accueil') }}" class="nav-link {% if app.request.get('_route') == 'accueil' %} active {% endif %}">
+								<i class="nav-icon fas fa-tachometer-alt"></i>
+								<p>
+									Tableau de bord
+								</p>
+							</a>
+						</li>
+						{# <li class="nav-item">
+																																																																																																																																																																																																																																																	<a href="#" class="nav-link">
+																																																																																																																																																																																																																																																		<i class="nav-icon fa fa-building"></i>
+																																																																																																																																																																																																																																																		<p>
+																																																																																																																																																																																																																																																			
+																																																																																																																																																																																																																																																		</p>
+																																																																																																																																																																																																																																																	</a>
+																																																																																																																																																																																																																																																</li> #}
+						{% if is_granted(role_admin) %}
+						<li class="nav-item has-treeview">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa fa-cog"></i>
+								<p>
+									Administration
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="{{ path('list_user') }}" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Utilisateurs</p>
+									</a>
+								</li>
+								
+							</ul>
+						</li>
+							
+						<li class="nav-item has-treeview">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa fa-cog"></i>
+								<p>
+									Gestion clients
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Liste clients</p>
+									</a>
+								</li>
+								
+							</ul>
+						</li>
+						{% endif %}
+						
+						
+						{# <li class="nav-item">
+																																																																															<a href="#" class="nav-link">
+																																																																																<i class="nav-icon fas fa-th"></i>
+																																																																																<p>
+																																																																																	Matière
+																																																																																	<span class="right badge badge-danger">New</span>
+																																																																																</p>
+																																																																															</a>
+																																																																														</li> #}
+					</ul>
+				</nav>
+			</div>
+		</aside>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				{% block content %}{% endblock %}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+{% block autresFichiersJs %}
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Summernote -->
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script>
+  $(function () {
+    // Summernote
+    $('.textarea').summernote()
+  })
+</script>
+{% endblock %}

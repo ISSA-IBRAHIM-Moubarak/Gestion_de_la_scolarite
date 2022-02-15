@@ -1,0 +1,186 @@
+{% extends 'layout_main.html.twig' %}
+{% block title %}Liste des retards
+{% endblock %}
+{% block autresfichierscss %}{% endblock %}
+{% block content %}
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Liste des retards</h1>
+					{% if classe is defined %}
+						<div class="{{classe}}">{{resultat}}</div>
+					{% endif %}
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item">
+							<a href="#">Accueil</a>
+						</li>
+						<li class="breadcrumb-item active">Liste retards</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Tableau de liste des retards</h3>
+							<div class="card-tools">
+								{% if is_granted(role_surveillant_superieur) or is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+									<div class="input-group input-group-sm">
+										<a class="btn btn-success btn-sm ml-3" href="{{ path('create_retard') }}">
+											<i class="fa fa-plus"></i>
+											Ajouter un retard
+										</a>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="retard" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>motif du retard</th>
+										<th>Date</th>
+										{% if is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+											<th>matiere</th>
+										{% endif %}
+										{% if is_granted(role_surveillant_superieur) %}
+											<th>module</th>
+										{% endif %}
+										<th>apprenant</th>
+										{% if is_granted(role_surveillant_superieur) or is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+											<th>Actions</th>
+										{% endif %}
+									</tr>
+								</thead>
+								<tbody>
+									{% for retard in retards %}
+										<tr>
+											<td>{{ retard.id }}</td>
+											<td>{{ retard.motifRetard }}</td>
+											<td>{{ retard.dateRetard|date('d-m-Y') }}
+											    {{ retard.heureRetard|date('H:i:s') }}</td>
+											{% if is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+												<td>{{ retard.matiere.intituleMatiere }}</td>
+											{% endif %}
+											{% if is_granted(role_surveillant_superieur) %}
+												<td>{{ retard.module.intituleModule }}</td>
+											{% endif %}
+											<td>{{ retard.apprenant.nomApprenant }}
+												{{ retard.apprenant.PrenomApprenant }}</td>
+
+											{% if is_granted(role_surveillant_superieur) or is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+												<td>
+													{% if retard.statut == 1  %}
+														<a class="btn btn-info btn-sm" href="{{ path('edit_retard', {id: retard.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier ce retard?')">
+															<i class="fa fa-edit"></i>
+															<span class="sr-only">Editer</span>
+														</a>
+													{% endif %}
+													{% if retard.statut == 1  %}
+														<a class="btn btn-danger btn-sm" href="{{ path('desabled_retard', {id: retard.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir Desactiver ce retard ?')">
+															<i class="fa fa-trash"></i>
+															<span class="sr-only">Delete</span>
+														</a>
+													{% endif %}
+
+													{% if retard.statut== 0  %}
+														<a class="btn btn-success btn-sm" href="{{ path('enable_retard', {id: retard.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir activer ce retard ?')">
+															<i class="fa fa-edit"></i>
+															<span class="sr-only">activate</span>
+														</a>
+													{% endif %}
+												</td>
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</tbody>
+								<tfoot></tfoot>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+
+{% endblock %}
+{% block autresFichiersJs %}
+	<!-- jQuery -->
+	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+	<!-- Bootstrap 4 -->
+	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<!-- DataTables  & Plugins -->
+	<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+	<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+	<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+	<!-- AdminLTE App -->
+	<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="{{ asset('dist/js/demo.js') }}"></script>
+	<!-- Page specific script -->
+	<script>
+		$(function () {
+$("#retard").DataTable({
+"responsive": true,
+"aaSorting": [
+[0, "desc"]
+],
+oLanguage: {
+sSearch: "Rechercher : ",
+sZeroRecords: "Aucune valeur trouvée",
+sInfo: "Afficher page _PAGE_ sur _PAGES_",
+sInfoFiltered: "(Filtres sur _MAX_ )",
+sInfoEmpty: "",
+oPaginate: {
+sFirst: "Premier",
+sPrevious: "Pr&eacute;c&eacute;dent",
+sNext: "Suivant",
+sLast: "Dernier"
+}
+},
+"lengthChange": false,
+"autoWidth": false,
+"buttons": [
+"copy",
+"csv",
+"excel",
+"pdf",
+"print",
+"colvis"
+]
+}).buttons().container().appendTo('#retard_wrapper .col-md-6:eq(0)');
+
+});
+	</script>
+{% endblock %}
+

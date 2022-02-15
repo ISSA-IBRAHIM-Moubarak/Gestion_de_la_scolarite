@@ -1,0 +1,790 @@
+{% extends 'layout_main.html.twig' %}
+{% block content %}
+	<!-- /.row -->
+	<div class="row">
+
+		<div
+			class="container-fluid">
+			<!-- Small boxes (Stat box) -->
+			{% if is_granted(role_admin_superieur) or is_granted(role_admin_secondaire) or is_granted(role_admin_primaire)
+   			 or is_granted(role_directeur_superieur) or is_granted(role_directeur_secondaire) or is_granted(role_directeur_primaire) %}
+				<div class="row">
+					<div
+						class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-secondary">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\ApprenantController::nombreApprenant')) |number_format(0,',','')}}</h3>
+
+								<p>Nombre d'apprenants</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-person-add"></i>
+							</div>
+							<a href="{{ path('list_apprenant') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<div
+						class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-primary">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\InscriptionController::nombreInscription')) |number_format(0,',','')}}
+									<small>FCFA</small>
+								</h3>
+								<p>Montant Total des Frais d'inscriptions/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-bag"></i>
+							</div>
+							<a href="{{ path('list_inscription') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div
+						class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-success">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\VersementController::nombreVersement')) |number_format(0,',','')}}
+									<small>FCFA</small>
+								</h3>
+								<p>Montant Total du versements/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-stats-bars"></i>
+							</div>
+							<a href="{{ path('list_versement') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+
+					<!-- ./col -->
+					<div
+						class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-danger">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\AbsenceController::nombreAbsence')) |number_format(0,',','')}}</h3>
+
+								<p>Nombre d'absences/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-home"></i>
+							</div>
+							<a href="{{ path('list_absence') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+				</div>
+				<div class="row">
+					<div
+						class="col-md-6">
+						<!-- AREA CHART -->
+						<div class="box box-primary">
+							<div class="box-header with-border">
+								<h3 class="box-title">Nombre d'inscription</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse">
+										<i class="fa fa-minus"></i>
+									</button>
+									<button type="button" class="btn btn-box-tool" data-widget="remove">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body">
+								<div class="chart">
+									<canvas id="areaChart1" style="height:250px"></canvas>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+
+						<!-- DONUT CHART -->
+						<div class="box box-danger">
+							<div class="box-header with-border">
+								<h3 class="box-title">Nombre du versement</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse">
+										<i class="fa fa-minus"></i>
+									</button>
+									<button type="button" class="btn btn-box-tool" data-widget="remove">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body">
+								<canvas id="areaChart3" style="height:250px"></canvas>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+
+					</div>
+					<!-- /.col (LEFT) -->
+					<div
+						class="col-md-6">
+						<!-- LINE CHART -->
+						<div class="box box-info">
+							<div class="box-header with-border">
+								<h3 class="box-title">Montant de l'inscription</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse">
+										<i class="fa fa-minus"></i>
+									</button>
+									<button type="button" class="btn btn-box-tool" data-widget="remove">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body">
+								<div class="chart">
+									<canvas id="areaChart2" style="height:250px"></canvas>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+
+						<!-- BAR CHART -->
+						<div class="box box-success">
+							<div class="box-header with-border">
+								<h3 class="box-title">Montant du versement</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse">
+										<i class="fa fa-minus"></i>
+									</button>
+									<button type="button" class="btn btn-box-tool" data-widget="remove">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body">
+								<div class="chart">
+									<canvas id="areaChart4" style="height:230px"></canvas>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+
+					</div>
+					<!-- /.col (RIGHT) -->
+				</div>
+
+				<!-- /.row (main row) -->
+			{% endif %}
+			{% if is_granted(role_caissier_superieur) or is_granted(role_caissier_secondaire) or is_granted(role_caissier_primaire) %}
+				<div class="row">
+					<div
+						class="col-lg-4 col-6">
+						<!-- small box -->
+						<div class="small-box bg-secondary">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\ApprenantController::nombreApprenant')) |number_format(0,',','')}}</h3>
+								<p>Nombre d'apprenants</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-person-add"></i>
+							</div>
+							<a href="{{ path('list_apprenant') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<div
+						class="col-lg-4 col-6">
+						<!-- small box -->
+						<div class="small-box bg-primary">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\InscriptionController::nombreInscription')) |number_format(0,',','')}}
+									<small>FCFA</small>
+								</h3>
+								<p>Montant Total des Frais d'inscriptions/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-bag"></i>
+							</div>
+							<a href="{{ path('list_inscription') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div
+						class="col-lg-4 col-6">
+						<!-- small box -->
+						<div class="small-box bg-success">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\VersementController::nombreVersement')) |number_format(0,',','')}}
+									<small>FCFA</small>
+								</h3>
+								<p>Montant Total du versements/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-stats-bars"></i>
+							</div>
+							<a href="{{ path('list_versement') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+				<!-- ./col -->
+					<!-- ./col -->
+					<!--Surveillant Debut-->
+
+					<!--Surveillant Fin-->
+				</div>
+				<!-- /.row -->
+				<!-- Main row -->
+				<div class="row"><!-- Left col -->
+
+
+					<!-- /.Left col -->
+					<!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+					<!-- right col -->
+				</div>
+				<!-- /.row (main row) -->
+			{% endif %}
+			{% if is_granted(role_surveillant_superieur) or is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+				<div class="row">
+					<div
+						class="col-lg-6 col-6">
+						<!-- small box -->
+						<div class="small-box bg-danger">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\AbsenceController::nombreAbsence')) |number_format(0,',','')}}</h3>
+
+								<p>Nombre d'absences/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-home"></i>
+							</div>
+							<a href="{{ path('list_absence') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div
+						class="col-lg-6 col-6">
+						<!-- small box -->
+						<div class="small-box bg-danger">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\RetardController::nombreRetard')) |number_format(0,',','')}}</h3>
+								<p>Nombre de Retards</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-clock"></i>
+							</div>
+							<a href="{{ path('list_retard') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+				<!-- ./col -->
+					<!-- ./col -->
+					<!--Surveillant Debut-->
+
+					<!--Surveillant Fin-->
+				</div>
+				<!-- /.row -->
+				<!-- Main row -->
+				<div class="row"><!-- Left col -->
+
+					<!-- /.Left col -->
+					<!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+					<!-- right col -->
+				</div>
+				<!-- /.row (main row) -->
+			{% endif %}
+			{% if is_granted(role_gerant_cantine_superieur) or is_granted(role_gerant_cantine_secondaire) or is_granted(role_gerant_cantine_primaire) %}
+				<div class="row">
+					<div
+						class="col-lg-6 col-6">
+						<!-- small box -->
+						<div class="small-box bg-info">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\CantineController::nombreCantine')) |number_format(0,',','')}}</h3>
+
+								<p>Nombre de la recette/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-pizza"></i>
+							</div>
+							<a href="{{ path('list_Cantine') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div
+						class="col-lg-6 col-6">
+						<!-- small box -->
+						<div class="small-box bg-info">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\CantineController::montantCantine')) |number_format(0,',','')}}
+								<small>FCFA</small>
+								</h3>
+								<p>Montant Total de la recette/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-pizza"></i>
+							</div>
+							<a href="{{ path('list_Cantine') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+				<!-- ./col -->
+					<!-- ./col -->
+					<!--Surveillant Debut-->
+
+					<!--Surveillant Fin-->
+				</div>
+				<!-- /.row -->
+				<!-- Main row -->
+				<div class="row"><!-- Left col -->
+
+					<!-- /.Left col -->
+					<!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+					<!-- right col -->
+				</div>
+				<!-- /.row (main row) -->
+			{% endif %}
+			{% if is_granted(role_gerant_transport_superieur) or is_granted(role_gerant_transport_secondaire) or is_granted(role_gerant_transport_primaire) %}
+				<div class="row">
+					<div
+						class="col-lg-6 col-6">
+						<!-- small box -->
+						<div class="small-box bg-info">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\TransportController::nombreTransport')) |number_format(0,',','')}}</h3>
+								<p>Nombre du Transport/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-planet"></i>
+							</div>
+							<a href="{{ path('list_Transport') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div
+						class="col-lg-6 col-6">
+						<!-- small box -->
+						<div class="small-box bg-info">
+							<div class="inner">
+								<h3>{{render(controller('App\\Controller\\TransportController::montantTransport')) |number_format(0,',','')}}
+								<small>FCFA</small>
+								</h3>
+								<p>Montant Total du Transport/jour</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-planet"></i>
+							</div>
+							<a href="{{ path('list_Transport') }}" class="small-box-footer">Voir plus
+								<i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- ./col -->
+				<!-- ./col -->
+					<!-- ./col -->
+					<!--Surveillant Debut-->
+
+					<!--Surveillant Fin-->
+				</div>
+				<!-- /.row -->
+				<!-- Main row -->
+				<div class="row"><!-- Left col -->
+
+					<!-- /.Left col -->
+					<!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+					<!-- right col -->
+				</div>
+				<!-- /.row (main row) -->
+			{% endif %}
+		</div>
+		<!-- /.container-fluid -->
+
+	</div>
+
+	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+	<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+	<script src="{{ asset('dist/js/demo.js') }}"></script>
+
+	<!-- AdminLTE App -->
+	<!-- AdminLTE for demo purposes -->
+	<!-- page script -->
+		<script>
+$(function () {
+
+var labels = [];
+var data = [];
+var graphe = 'areaChart';
+var grapheb = 'barChart';
+var dataInscription = [];
+var dataVersement = [];
+// alert(labels);
+
+var areaChartCanvas = $('#areaChart1').get(0).getContext('2d')
+{% for p in grapheInscriptions %}
+			  
+			  labels.push({{p.date | date('dmY')}});
+			  dataInscription.push({{p.nombre}});
+{% endfor %}
+// var labels = ['janvier 2021','fevrier 2021','mars 2021']
+// var data = [800000,60000,800000];
+var areaChartData = {
+
+
+labels: labels,
+datasets: [
+{
+label: "Nombre d'inscription",
+backgroundColor: 'rgba(60,141,188,0.9)',
+borderColor: 'rgba(60,141,188,0.8)',
+pointRadius: false,
+pointColor: '#3b8bba',
+pointStrokeColor: 'rgba(60,141,188,1)',
+pointHighlightFill: '#fff',
+pointHighlightStroke: 'rgba(60,141,188,1)',
+data: dataInscription
+},
+/*{
+				label               : 'Montant de bons emis',
+				backgroundColor     : 'rgba(210, 214, 222, 1)',
+				borderColor         : 'rgba(210, 214, 222, 1)',
+				pointRadius         : false,
+				pointColor          : 'rgba(210, 214, 222, 1)',
+				pointStrokeColor    : '#c1c7d1',
+				pointHighlightFill  : '#fff',
+				pointHighlightStroke: 'rgba(220,220,220,1)',
+				data                : dataconsommes
+			  },*/
+]
+}
+
+var areaChartOptions = {
+maintainAspectRatio: false,
+responsive: true,
+legend: {
+display: true
+},
+scales: {
+xAxes: [
+{
+gridLines: {
+display: false
+}
+}
+],
+yAxes: [
+{
+gridLines: {
+display: false
+}
+}
+]
+}
+}
+
+var areaChart = new Chart(areaChartCanvas, {
+type: 'line',
+data: areaChartData,
+options: areaChartOptions
+})
+
+
+var areaChartCanvas = $('#areaChart2').get(0).getContext('2d')
+{% for p in grapheInscriptions %}
+			  
+			  labels.push({{p.date | date('dmY')}});
+			  dataInscription.push({{p.montant}});
+{% endfor %}
+
+// var labels = ['janvier 2021','fevrier 2021','mars 2021']
+// var data = [800000,60000,800000];
+var areaChartData = {
+
+
+labels: labels,
+datasets: [
+{
+label: "Montant d'inscription",
+backgroundColor: '#32cd32',
+borderColor: '#32cd32',
+pointRadius: false,
+pointColor: '#3b8bba',
+pointStrokeColor: 'rgba(60,141,188,1)',
+pointHighlightFill: '#fff',
+pointHighlightStroke: 'rgba(60,141,188,1)',
+data: dataInscription
+},
+/*{
+				label               : 'Montant de bons emis',
+				backgroundColor     : 'rgba(210, 214, 222, 1)',
+				borderColor         : 'rgba(210, 214, 222, 1)',
+				pointRadius         : false,
+				pointColor          : 'rgba(210, 214, 222, 1)',
+				pointStrokeColor    : '#c1c7d1',
+				pointHighlightFill  : '#fff',
+				pointHighlightStroke: 'rgba(220,220,220,1)',
+				data                : dataconsommes
+			  },*/
+]
+}
+
+var areaChartOptions = {
+maintainAspectRatio: false,
+responsive: true,
+legend: {
+display: true
+},
+scales: {
+xAxes: [
+{
+gridLines: {
+display: false
+}
+}
+],
+yAxes: [
+{
+gridLines: {
+display: false
+}
+}
+]
+}
+}
+
+var areaChart = new Chart(areaChartCanvas, {
+type: 'line',
+data: areaChartData,
+options: areaChartOptions
+})
+
+var areaChartCanvas = $('#areaChart3').get(0).getContext('2d')
+{% for p in grapheVersements %}
+			  
+			  labels.push({{p.date | date('dmY')}});
+			  dataVersement.push({{p.nombre}});
+{% endfor %}
+
+// var labels = ['janvier 2021','fevrier 2021','mars 2021']
+// var data = [800000,60000,800000];
+var areaChartData = {
+
+
+labels: labels,
+datasets: [
+{
+label: 'Nombre du versement',
+backgroundColor: 'rgba(60,141,188,0.9)',
+borderColor: 'rgba(60,141,188,0.8)',
+pointRadius: false,
+pointColor: '#3b8bba',
+pointStrokeColor: 'rgba(60,141,188,1)',
+pointHighlightFill: '#fff',
+pointHighlightStroke: 'rgba(60,141,188,1)',
+data: dataVersement
+},
+/*{
+				label               : 'Montant de bons emis',
+				backgroundColor     : 'rgba(210, 214, 222, 1)',
+				borderColor         : 'rgba(210, 214, 222, 1)',
+				pointRadius         : false,
+				pointColor          : 'rgba(210, 214, 222, 1)',
+				pointStrokeColor    : '#c1c7d1',
+				pointHighlightFill  : '#fff',
+				pointHighlightStroke: 'rgba(220,220,220,1)',
+				data                : dataconsommes
+			  },*/
+]
+}
+
+var areaChartOptions = {
+maintainAspectRatio: false,
+responsive: true,
+legend: {
+display: true
+},
+scales: {
+xAxes: [
+{
+gridLines: {
+display: false
+}
+}
+],
+yAxes: [
+{
+gridLines: {
+display: false
+}
+}
+]
+}
+}
+
+var areaChart = new Chart(areaChartCanvas, {
+type: 'line',
+data: areaChartData,
+options: areaChartOptions
+})
+
+var areaChartCanvas = $('#areaChart4').get(0).getContext('2d')
+{% for p in grapheVersements %}
+			  
+			  labels.push({{p.date | date('dmY')}});
+			  dataVersement.push({{p.montant}});
+{% endfor %}
+
+
+// var labels = ['janvier 2021','fevrier 2021','mars 2021']
+// var data = [800000,60000,800000];
+var areaChartData = {
+
+
+labels: labels,
+datasets: [
+{
+label: 'Montant du versement',
+backgroundColor: '#32cd32',
+borderColor: '#32cd32',
+pointRadius: false,
+pointColor: '#3b8bba',
+pointStrokeColor: 'rgba(60,141,188,1)',
+pointHighlightFill: '#fff',
+pointHighlightStroke: 'rgba(60,141,188,1)',
+data: dataVersement
+},
+/*{
+				label               : 'Montant de bons emis',
+				backgroundColor     : 'rgba(210, 214, 222, 1)',
+				borderColor         : 'rgba(210, 214, 222, 1)',
+				pointRadius         : false,
+				pointColor          : 'rgba(210, 214, 222, 1)',
+				pointStrokeColor    : '#c1c7d1',
+				pointHighlightFill  : '#fff',
+				pointHighlightStroke: 'rgba(220,220,220,1)',
+				data                : dataconsommes
+			  },*/
+]
+}
+
+var areaChartOptions = {
+maintainAspectRatio: false,
+responsive: true,
+legend: {
+display: true
+},
+scales: {
+xAxes: [
+{
+gridLines: {
+display: false
+}
+}
+],
+yAxes: [
+{
+gridLines: {
+display: false
+}
+}
+]
+}
+}
+
+var areaChart = new Chart(areaChartCanvas, {
+type: 'line',
+data: areaChartData,
+options: areaChartOptions
+})
+
+
+if (graphe == 'donutChart') {
+var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+var donutData = {
+labels: labels,
+datasets: [
+{
+data: data,
+backgroundColor: ['#f56954', '#00a65a']
+}
+]
+}
+
+var donutOptions = {
+maintainAspectRatio: false,
+responsive: true
+}
+// Create pie or douhnut chart
+// You can switch between pie and douhnut using the method below.
+var donutChart = new Chart(donutChartCanvas, {
+type: 'doughnut',
+data: donutData,
+options: donutOptions
+})
+
+// ---------------------
+// - STACKED BAR CHART -
+// ---------------------
+var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+var stackedBarChartData = jQuery.extend(true, {}, barChartData)
+
+var stackedBarChartOptions = {
+responsive: true,
+maintainAspectRatio: false,
+scales: {
+xAxes: [
+{
+stacked: true
+}
+],
+yAxes: [
+{
+stacked: true
+}
+]
+}
+}
+
+var stackedBarChart = new Chart(stackedBarChartCanvas, {
+type: 'bar',
+data: stackedBarChartData,
+options: stackedBarChartOptions
+})
+} else { // rien a faire
+}
+
+})
+</script>{% endblock %}
+

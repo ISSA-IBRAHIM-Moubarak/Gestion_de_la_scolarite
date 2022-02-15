@@ -1,0 +1,173 @@
+{% extends 'layout_main.html.twig' %}
+{% block title %}Liste notification
+{% endblock %}
+{% block autresfichierscss %}{% endblock %}
+{% block content %}
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Liste notification</h1>
+					{% if classe is defined %}
+						<div class="{{classe}}">{{resultat}}</div>
+					{% endif %}
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item">
+							<a href="#">Accueil</a>
+						</li>
+						<li class="breadcrumb-item active">Liste notification</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Tableau de liste des notifications</h3>
+							<div class="card-tools">
+								{% if is_granted(role_surveillant_superieur) or is_granted(role_surveillant_secondaire) or is_granted(role_surveillant_primaire) %}
+									<div class="input-group input-group-sm">
+										<a class="btn btn-success btn-sm ml-3" href="{{ path('create_notification') }}">
+											<i class="fa fa-plus"></i>
+											Notification par groupe
+										</a>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<table id="notification" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Date d'envoie</th>
+										<th>objet</th>
+										<th>apprenant</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for notification in notifications %}
+										<tr>
+											<td>{{ notification.id }}</td>
+											<td>{{ notification.dateNotification|date('d-m-Y') }}
+												{{ notification.heureNotification|date('H:i:s') }}</td>
+											<td>{{ notification.objet }}</td>
+											<td>{{ notification.apprenant.NomApprenant }}
+											    {{ notification.apprenant.PrenomApprenant }}</td>
+											<!--Accès uniquement pour les surveillants-->
+											<!--<td>
+												<a class="btn btn-warning btn-sm" href="#">
+													<i class="fa fa-plus"></i>
+													<span class="sr-only"></span>
+												</a>
+											</td>-->
+												<td>{% if notification.statut == 1 %}
+													<a class="btn btn-info btn-sm" href="{{ path('edit_notification', {'id': notification.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir modifier cette notification?')">
+														<i class="fa fa-edit"></i>
+														<span class="sr-only">Editer</span>
+													</a>
+													{% endif %}
+													{% if notification.statut == 1 %}
+														<a class="btn btn-danger btn-sm" href="{{ path('desabled_notification', {'id': notification.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir desactiver cette notification?')">
+															<i class="fa fa-trash"></i>
+															<span class="sr-only">delete</span>
+														</a>
+													{% endif %}
+													{%if notification.statut == 0 %}
+														<a class="btn btn-success btn-sm" href="{{ path('enable_notification', {'id': notification.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir activer cette notification?')">
+															<i class="fa fa-edit"></i>
+															<span class="sr-only">activate</span>
+														</a>
+													{% endif %}
+												</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+
+{% endblock %}
+{% block autresFichiersJs %}
+	<!-- jQuery -->
+	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+	<!-- Bootstrap 4 -->
+	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<!-- DataTables  & Plugins -->
+	<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+	<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+	<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+	<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+	<!-- AdminLTE App -->
+	<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="{{ asset('dist/js/demo.js') }}"></script>
+	<!-- Page specific script -->
+	<script>
+		$(function () {
+$("#notification").DataTable({
+"responsive": true,
+"aaSorting": [
+[0, "desc"]
+],
+oLanguage: {
+sSearch: "Rechercher : ",
+sZeroRecords: "Aucune valeur trouvée",
+sInfo: "Afficher page _PAGE_ sur _PAGES_",
+sInfoFiltered: "(Filtres sur _MAX_ )",
+sInfoEmpty: "",
+oPaginate: {
+sFirst: "Premier",
+sPrevious: "Pr&eacute;c&eacute;dent",
+sNext: "Suivant",
+sLast: "Dernier"
+}
+},
+"lengthChange": false,
+"autoWidth": false,
+"buttons": [
+"copy",
+"csv",
+"excel",
+"pdf",
+"print",
+"colvis"
+]
+}).buttons().container().appendTo('#notification_wrapper .col-md-6:eq(0)');
+
+});
+	</script>
+{% endblock %}
+

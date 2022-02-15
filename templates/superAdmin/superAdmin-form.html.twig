@@ -1,0 +1,177 @@
+{% extends 'layout_main.html.twig' %}
+{% block title %}Administrateur
+{% endblock %}
+{% block content %}
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1></h1>
+					{% if classe is defined %}
+						<div class="{{classe}}">{{resultat}}</div>
+					{% endif %}
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+
+						<li class="breadcrumb-item active"></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							{% if action == 'create' %}
+								<h2 class="card-title">Nouvel Administrateur</h2>
+							{% endif %}
+							{% if action == 'edit' %}
+								<h2 class="card-title">Modifier l'Administrateur [{{ user.username }}]</h2>
+							{% endif %}
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+
+							{{ form_start(form, {'attr': {'id': 'field_form'}}) }}
+							{{ form_errors(form) }}
+
+							<div class="card-body">
+								<div class="row">
+
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.firstName, "Prénom", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.firstName, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.firstName) }}
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.lastName, "Nom", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.lastName, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.lastName) }}
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.email, "E-mail", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.email, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.email) }}
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.username, "Nom de l'administrateur", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.username, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.username) }}
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.plainPassword.first) }}
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.plainPassword.second, "Confirmation du mot de passe", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.plainPassword.second) }}
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											{{ form_label(form.telephone, "Telephone", {'label_attr': {'class': 'form-label'}}) }}
+											{{ form_widget(form.telephone, {'attr': {'class': 'form-control' } }) }}
+											{{ form_errors(form.telephone) }}
+										</div>
+									</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												{{ form_label(form.structure, "Nom de la structure", {'label_attr': {'class': 'form-label'}}) }}
+												{{ form_widget(form.structure, {'attr': {'class': 'form-control' } }) }}
+												{{ form_errors(form.structure) }}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										{{ form_label(form.roles, "Role", {'label_attr': {'class': 'form-label'}}) }}
+										{{ form_widget(form.roles, {'attr': {'class': '', 'type': 'roles' } }) }}
+										{{ form_errors(form.roles) }}
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-sm btn-success float-right">
+									<i class="fa fa-save"></i>
+									Sauvegarder</button>
+								{{ form_rest(form) }}
+								{{ form_end(form) }}
+								<button type="button" class="btn btn-sm btn-default float-right mr-1 back" onclick='location.href="{{ path('list_SuperAdmin') }}"'>
+									<i class="fa fa-ban"></i>Annuler</button>
+
+
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+
+		<!-- Control Sidebar -->
+		<aside
+			class="control-sidebar control-sidebar-dark"><!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+	</div>
+	<!-- ./wrapper -->
+
+
+{% endblock %}
+{% block autresFichiersJs %}
+	<!-- jQuery -->
+	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+	<!-- Bootstrap 4 -->
+	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<!-- AdminLTE App -->
+	<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="{{ asset('dist/js/demo.js') }}"></script>
+	<!-- Summernote -->
+	<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+	<script>
+		$(function () { // Summernote
+$('.textarea').summernote()
+})
+	</script>
+
+
+{% endblock %}
+

@@ -1,0 +1,76 @@
+<head>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #FAFAFA;
+			font: 6pt "Tahoma";
+		}
+		body {
+			background: rgb(300, 300, 300);
+		}
+		page[size="A4"] {
+			background: white;
+			width: 21cm;
+			height: 29.7cm;
+			display: block;
+			margin: 0 auto 0.5cm 100px;
+			box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+		}
+		@media print {
+			body,
+			page[size="A4"] {
+				margin: 0;
+				box-shadow: 0;
+			}
+		}
+		<page size="A4" > </page > <page size="A4" > </page > <page size="A4" > </page > #centrer {
+			background-color: #ededed;
+			margin-left: 30px; /*margin-left: none; si tu veux que ta page colle la bordure de gauche*/
+			margin-right: 50%;
+			width: 800px;
+			text-align: center;
+
+		}
+
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td,
+		th {
+			border: 0;
+			text-align: left;
+			padding: 2px;
+		}
+	</style>
+	<meta charset="UTF-8">
+</head>
+<body onload="window.print();">
+	<div>
+		<table style="width:100%; margin-top: 3px;" border="1">
+			<thead>
+				<tr>
+					<th>Matiere</th>
+					<th>Module</th>
+					<th>Periode</th>
+					<th>Heure</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for infosEmploi in infosEmploi %}
+					<tr>
+						<td>{{ infosEmploi['intituleModule']}}</td>
+						<td>{{ infosEmploi['intituleMatiere']}}</td>
+						<td>{{ infosEmploi['periode']}}</td>
+						<td>{{ infosEmploi['heureDebut']|date('H:i')}}
+							{{ infosEmploi['heureFin']|date('H:i')}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</body>
+</body>
+

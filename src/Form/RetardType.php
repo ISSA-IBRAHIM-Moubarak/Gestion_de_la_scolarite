@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Form;
+use App\Entity\Retard;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\DBAL\Types\FloatType;
+use Doctrine\DBAL\Types\DateType;
+use phpDocumentor\Reflection\Types\Float_;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+class RetardType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('motifRetard')
+            ->add('module',EntityType::class,array('class' => 'App\Entity\Module','choice_label' => 'intituleModule' , 'required' => true))
+            ->add('apprenant',EntityType::class,array('class' => 'App\Entity\Apprenant','choice_label' => 'NomApprenant','required' => true))
+
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Retard::class,
+        ]);
+    }
+}

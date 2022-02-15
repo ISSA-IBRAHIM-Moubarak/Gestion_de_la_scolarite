@@ -1,0 +1,124 @@
+{% extends 'layout_main.html.twig' %}
+{% block title %}Nouveau module
+{% endblock %}
+{% block content %}
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Affectation des modules aux semestre</h1>
+					{% if classe is defined %}
+						<div class="{{classe}}">{{resultat}}</div>
+					{% endif %}
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item">
+							<a href="#">Accueil</a>
+						</li>
+						<li class="breadcrumb-item active">Nouvelle affectation</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+
+					<div class="card">
+						<div class="card-header">
+							{% if is_granted(role_enseignant_superieur) %}
+								<h2 class="card-title">Nouveau affectation de module</h2>
+							{%  endif %}
+
+							{% if is_granted(role_enseignant_secondaire) %}
+								<h2 class="card-title">Nouveau affectation de matière</h2>
+							{%  endif %}
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+
+							{{ form_start(form, {'attr': {'id': 'field_form'}}) }}
+							{{ form_errors(form) }}
+							<div class="card-body">
+								<div class="row">
+									{% if is_granted(role_enseignant_superieur) %}
+										<div class="col-md-6">
+											<div class="form-group">
+												{{ form_label(form.module, "Selectionner un module", {'label_attr': {'class': 'form-label'}}) }}
+												{{ form_widget(form.module, {'attr': {'class': 'form-control' } }) }}
+												{{ form_errors(form.module) }}
+											</div>
+										</div>
+									{% endif %}
+
+									{% if is_granted(role_enseignant_secondaire) %}
+										<div class="col-md-6">
+											<div class="form-group">
+												{{ form_label(form.matiere, "Selectionner une matière", {'label_attr': {'class': 'form-label'}}) }}
+												{{ form_widget(form.matiere, {'attr': {'class': 'form-control' } }) }}
+												{{ form_errors(form.matiere) }}
+											</div>
+										</div>
+									{% endif %}
+								</div>
+
+								<div class="card-footer">
+									<button type="submit" class="btn btn-sm btn-success float-right">
+										<i class="fa fa-save"></i>
+										Sauvegarder</button>
+									{{ form_rest(form) }}
+									{{ form_end(form) }}
+									<button type="button" class="btn btn-sm btn-default float-right mr-1 back" onclick='location.href="{{ path('list_semestre') }}"'>
+										<i class="fa fa-ban"></i>Annuler</button>
+
+								</div>
+
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+
+		<!-- Control Sidebar -->
+		<aside
+			class="control-sidebar control-sidebar-dark"><!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+	</div>
+	<!-- ./wrapper -->
+
+
+{% endblock %}
+{% block autresFichiersJs %}
+	<!-- jQuery -->
+	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+	<!-- Bootstrap 4 -->
+	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<!-- AdminLTE App -->
+	<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="{{ asset('dist/js/demo.js') }}"></script>
+	<!-- Summernote -->
+	<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+	<script>
+		$(function () { // Summernote
+$('.textarea').summernote()
+})
+	</script>
+
+
+{% endblock %}

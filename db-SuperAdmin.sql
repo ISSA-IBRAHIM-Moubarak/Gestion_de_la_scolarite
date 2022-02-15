@@ -1,0 +1,2 @@
+INSERT INTO `fos_user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `first_name`, `last_name`, `telephone`, `structure_id`) VALUES
+(1, 'SuperAdmin', 'superadmin', 'superadmin@gmail.com', 'superadmin@gmail.com', 1, NULL, '$argon2id$v=19$m=65536,t=4,p=1$NDdUei9TUG1yR2hBRnhrLg$HbvUp0U7YYN2gNEuNdMCTo+oFLoKRZ/q76OaJKzlNx0', '2021-08-05 23:06:04', NULL, NULL, 'a:1:{i:0;s:16:\"ROLE_SUPER_ADMIN\";}', 'SuperAdmin', 'SuperAdmin', '80771226', NULL);

@@ -1,0 +1,148 @@
+{% extends 'layout_main.html.twig' %}
+{% block title %}Liste des Apprenant
+	{% endblock %}
+{% block autresfichierscss %}
+ 
+{% endblock %}
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Detail sur l'apprenant</h1>
+             {% if classe is defined %}
+			<div class="{{classe}}">{{resultat}}</div>
+		{% endif %}
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+              <li class="breadcrumb-item active">Detail des Apprenants</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Tableau de detail de l'apprenant</h3>
+				        
+              </div>
+              <div class="col-md-12">
+                <div class="card">
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <dl class="row">
+                     <dt class="col-sm-4">Nom:</dt>
+                      <dd class="col-sm-8">{{ apprenants.NomApprenant  }}</dd>  
+
+                      <dt class="col-sm-4">Prenom:</dt>
+                      <dd class="col-sm-8">{{ apprenants.PrenomApprenant  }}</dd>
+                     
+                      <dt class="col-sm-4">Date de naissance:</dt>
+                      <dd class="col-sm-8">{{ apprenants.DateNaissance |date('d-m-Y') }}</dd>
+
+                      <dt class="col-sm-4">Lieu de naissance:</dt>
+                      <dd class="col-sm-8">{{ apprenants.LieuNaissance }}</dd>
+
+                      <dt class="col-sm-4">Nationalite: </dt>
+                      <dd class="col-sm-8">{{ apprenants.Nationalite }}</dd>
+
+                      <dt class="col-sm-4">Genre:</dt>
+                      <dd class="col-sm-8">{{ apprenants.Genre}}</dd>
+
+                      <dt class="col-sm-4">Contact:</dt>
+                      <dd class="col-sm-8">{{ apprenants.Contact }}</dd>
+
+                      <dt class="col-sm-4">SituationMatrimoniale:</dt>
+                      <dd class="col-sm-8">{{ apprenants.SituationMatrimoniale }}</dd>
+
+                      <dt class="col-sm-4">Email:</dt>
+                      <dd class="col-sm-8">{{ apprenants.Email }}</dd>
+
+                      <dt class="col-sm-4">Adresse:</dt>
+                      <dd class="col-sm-8">{{ apprenants.Adresse }}</dd>
+                      
+
+
+                    </dl>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+        
+                    <div class="input-group input-group-sm">
+                      <a class="btn btn-success btn-sm ml-3" href="{{ path('list_apprenant') }}">
+                        <i class="fa fa-plus"></i>
+                          Retour
+                      </a>
+                    </div>
+                   
+					        </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+  {% endblock %}
+{% block autresFichiersJs %}
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#Apprenant").DataTable({
+      "responsive": true,"aaSorting": [[0, "desc"]],oLanguage: {
+sSearch: "Rechercher : ",
+sZeroRecords: "Aucune valeur trouvée",
+sInfo: "Afficher page _PAGE_ sur _PAGES_",
+sInfoFiltered: "(Filtres sur _MAX_ )",
+sInfoEmpty: "",
+oPaginate: {
+sFirst: "Premier",
+sPrevious: "Pr&eacute;c&eacute;dent",
+sNext: "Suivant",
+sLast: "Dernier"
+}
+}, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#Apprenant_wrapper .col-md-6:eq(0)');
+    
+  });
+</script>
+  {% endblock %}

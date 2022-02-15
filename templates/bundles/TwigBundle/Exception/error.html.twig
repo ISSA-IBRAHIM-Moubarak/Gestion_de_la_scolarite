@@ -1,0 +1,11 @@
+{% extends 'layoutError.html.twig' %}
+{% block body%}
+    <div class="five-zero-zero-container">
+        <div class="error-code">{{ status_code }}</div>
+        <div class="error-message">Le serveur est momentanément indisponible.</div>
+        <div class="button-place">
+            <a href="{{ path('accueil') }}" class="btn btn-default btn-lg waves-effect">RETOURNER À  LA PAGE D'ACCUEIL</a>
+        </div>
+    </div>
+{% endblock %}
+

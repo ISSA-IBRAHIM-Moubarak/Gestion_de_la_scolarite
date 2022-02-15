@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Stack : Suivi de nomservice{% endblock %}</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+</head>
+
+<body class="hold-transition login-page" style="color: white;background-image:url('{{ asset('dist/img/diplome-2.jpg') }}');background-repeat: no-repeat;
+background-size: 100% 100%; ">
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid " style="width: 50%; margin-left: 300px;">
+  <div class="card card0 border-0" style="width: 90%; margin: 90px; background-color: rgba(255,255,255,0.176)">
+    <div class="row d-flex">
+        <div class="col-lg-3 margin-left: 30px;">
+            <div class="card1 pb-5" style="background-image: url('');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin-left: 15px;
+              background-position: center; margin-top: -100px;">
+                <div class="row px-3 justify-content-center mt-4 mb-5 border-line" >  </div>
+                
+            </div>
+            
+        </div>
+  
+
+    
+      <a href="{{ path("login") }}" class="h1"><b></b></a>
+      
+    </div>
+    {% block body %} {% endblock %}
+
+    
+    
+  
+  <!-- /.card -->
+    </div>
+</div>
+<br>
+<br>  
+<div class="py-2" style="color: #869099; margin: -10%;">
+      <div class="social-contact ml-4 ml-sm-auto"> </div>
+  </div>
+</div>
+</div></div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<head>
+<style>
+	body {
+		background-color: transparent;
+		margin: auto;
+		width: 980px;
+	}
+	#contenue {
+		border: 1px solid black;
+	}
+	#logo {
+		display: inline-block;
+	}
+	.pole {
+		background-color: darkgrey;
+	}
+	.titre_principal {
+		display: inline-block;
+	}
+	.ministere {
+		text-align: center;
+	}
+	.Souligner {
+		text-decoration: underline;
+	}
+	.logo2 {
+		float: left;
+		margin-bottom: 20px;
+		margin-left: 10px;
+	}
+	div h1 {
+		font-variant: small-caps;
+		font-family: Arial, Helvetica, sans-serif;
+		text-align: center;
+	}
+	h2 {
+		text-transform: capitalize;
+		font-weight: bolder;
+		text-align: center;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	.nom {
+		display: inline-block;
+		font-weight: bold;
+	}
+	.matricule {
+		float: left;
+		margin-left: 168px;
+		float: right;
+		margin-right: 272px;
+		font-weight: bold;
+		margin-bottom: -70px;
+	}
+	.section,
+	.date {
+		text-transform: capitalize;
+		font-weight: bold;
+	}
+
+	.EUE {
+		font-weight: bolder;
+		text-align: center;
+	}
+	.Enseignant {
+		text-align: center;
+		font-weight: bolder;
+	}
+	.BOLY {
+		text-align: center;
+	}
+	nav ul {
+		list-style-type: none;
+		text-align: center;
+		font-weight: bolder;
+	}
+	.contacte_principal {
+		text-transform: capitalize;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	nav li {
+		display: inline-block;
+		margin-right: 10px;
+	}
+	.nationalité {
+		display: inline-block;
+	}
+
+	#table {
+		border-collapse: collapse;
+		border: 1px solid black;
+		margin-top: 5px;
+		text-transform: capitalize;
+
+	}
+	.niveau {
+		font-weight: bolder;
+		background-color: greenyellow;
+	}
+	thead,
+	tfoot {
+		text-align: center;
+		font-weight: bolder;
+		background-color: rgb(157, 162, 233);
+	}
+	.UE {
+		font-weight: bold;
+		background-color: dodgerblue;
+	}
+	td {
+		border: 1px solid black;
+	}
+	.pied_de_page {
+
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	.fin {
+		background-color: rgb(236, 8, 8);
+		display: inline-block;
+		margin-left: 100px;
+		font-weight: bolder;
+		margin-bottom: 130px;
+	}
+	.capp {
+		display: inline-block;
+	}
+	.credit {
+		text-align: center;
+	}
+	.mention {
+		float: right;
+		margin-left: 740px;
+		margin-top: -230px;
+	}
+	.fa {
+		border-collapse: collapse;
+		border: 1px solid black;
+		margin-top: 3px;
+		font-weight: bolder;
+	}
+	.directeur {
+		font-weight: bolder;
+		text-decoration: underline;
+	}
+	@media print {
+		body,
+		page[size="A4"] {
+			margin: 0;
+			box-shadow: 0;
+		}
+	}
+	<page size="A4" > </page > <page size="A4" > </page > <page size="A4" > </page > #centrer {
+		background-color: #ededed;
+		margin-left: 30px; /*margin-left: none; si tu veux que ta page colle la bordure de gauche*/
+		margin-right: 50%;
+		width: 800px;
+		text-align: center;
+
+	}
+
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td,
+	th {
+		border: 0;
+		text-align: left;
+		padding: 2px;
+	}
+</style>
+<meta charset="UTF-8">
+</head>
+<body onload="window.print();">
+<div class="row">
+	<div class="col-6">
+		<div class="card">
+			<div class="card-header">
+
+				<div style="width: 100%; height: 100px;">
+					<div style="width:90%; text-align: left;">
+						<img height="120px" style="position: absolute; z-index: 1;" src="{{ asset('dist/img/tn.jpg') }}" alt="logo iai-niger">
+
+						<div style="width: 100%; height: 100px; position:absolute;margin-right: 10xp; z-index: 1;&">
+							<div style="width:58%; text-align: right">
+								<img height="120px" src="{{ asset('dist/img/tn.jpg') }}" alt="logo iai-niger">
+								<br>
+								<br>
+								<br>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+					<div style="width: 100%; margin-left: 30%; font-size: 150%; font-family: cambria;">
+						<div>INSTITUT AFRICAIN D'INFORMATIQUE
+						</div>
+						<br>
+						<div style="margin-left: -1%;">REPRESENTATION AU NIGER (IAI-NIGER)</div>
+						<br>
+						<div style="margin-left: 1%;">B.P: 12078 Niamey Tel:20.72.56.72</div>
+					</div>
+				</div>
+			</div>
+			<div id="centrer" style="width: 60%; margin-left: 35%;font-size: 100%; position: absolute;">
+			</div>
+			<br>
+			<br>
+
+		</div>
+	</div>
+	<br>
+			<br>
+			<br>
+			<h1>BILLETIN DE NOTE</h1>
+</div>
+
+<!-- /.card-header -->
+<br>
+<br>
+<br>
+<br>
+<div class="card-tools"></div>
+<div>
+	<table style="width:100%; margin-top: -30px;">
+		<tr>
+			<td>
+				Nom :
+				<b>{{ notes[0]['NomApprenant'] }}</b>
+			</td>
+		</tr>
+	</table>
+	<table style="width:100%; margin-top: 3px;">
+		<tr>
+			<td>
+				Prenom:
+				<b>{{ notes[0]['PrenomApprenant']}}</b>
+			</td>
+		</tr>
+	</table>
+	<table style="width:100%; margin-top: 3px;">
+		<tr>
+			<td style="text-align: left ;">
+				Date naissance:
+				<b>{{ notes[0]['DateNaissance'] |date('d-m-Y') }}</b>
+			</td>
+		</tr>
+	</table>
+	<table style="width:100%; margin-top: 3px;">
+		<tr>
+			<td style="text-align: left ;">
+				Lieu naissance:
+				<b>{{ notes[0]['LieuNaissance'] }}</b>
+			</td>
+		</tr>
+	</table>
+
+	<table style="width:100%; margin-top: 3px;">
+		<tr>
+			<td style="text-align: left ;">
+				Cycle:
+				<b>{{ notes[0]['intituleFiliere'] }}</b>
+			</td>
+		</tr>
+	</table>
+	<br/>
+	<br/>
+</div><br>
+</body></div></body><div class="card-body"><table id="note" class="table table-bordered table-striped">
+
+<thead>
+<tr>
+	<th>Modules</th>
+	<th>Coeficient</th>
+	<th>Moyenne Etudiant</th>
+	<th>Moyenne de classe</th>
+</tr>
+</thead>
+
+<tbody>
+{% for notes in notes %}
+	<tr>
+		<td>{{ notes['intituleModule'] }}</td>
+		<td>{{ notes['coeficient'] }}</td>
+		<td>{{ notes['moyenneEtudiant'] }}</td>
+		<td>{{ notes['moyenneClasse'] }}</td>
+	</tr>
+{% endfor %}
+</tbody>
+<tr>
+<td>Total</td>
+<td>{{ total }}</td>
+<td>{{ totalMoyenneEtudiant }}</td>
+</tr></table></div><br><br><div class="card-tools"></div><div><table style="width:100%; margin-top: 3px;">
+<tr>
+<td>
+	Moyenne de l'etudiant :
+
+	<b>{{ moyenneEtu }}</b>
+</td>
+</tr></table>
+<table style="width:100%; margin-top: 3px;">
+<tr>
+<td style="text-align: right ;">
+	rang :
+	<b>1 <sup>ere</sup></b>
+</td>
+</tr></table><table style="width:100%; margin-top: 3px;">
+<tr>
+<td>
+	effectif de la classe:
+	<b>{{ notes[0]['effectif']}}</b>
+</td>
+</tr></table><table style="width:100%; margin-top: 3px;">
+<tr>
+<td style="text-align: right ;">
+	Min.classe:
+	<b>09.87</b>
+</td>
+</tr></table><table style="width:100%; margin-top: 3px;">
+<tr>
+<td style="text-align: left ;">
+	Moyenne de la classe:
+	<b>{{ totalsommeMoyenneClasse }}</b>
+</td>
+</tr></table><table style="width:100%; margin-top: 3px;">
+<tr>
+<td style="text-align: right ;">
+	Max.classe:
+	<b>15.1</b>
+</td>
+</tr>
+</table>
+<center>
+<h4>Directeur des Etudes</h4>
+</center>
+<br/><br/></div><br></div></body>
+
