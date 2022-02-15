@@ -2,6 +2,7 @@
 .env
 /public
 /var
+/src
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid
